@@ -1057,7 +1057,7 @@ Plus they are only used when the contract is meant to be used as standalone when
       }
       abi = mergeABIs([abi, artifact.abi], {
         check: true,
-        skipSupportsInterface: false,
+        skipSupportsInterface: true,
       });
       // TODO allow facet to be named so multiple version could coexist
       const implementation = await _deployOne(facet, {
