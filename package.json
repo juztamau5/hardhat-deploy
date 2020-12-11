@@ -22,6 +22,7 @@
     "hardhat-plugin"
   ],
   "files": [
+    ".setup.js",
     "dist/src/",
     "dist/types*",
     "dist/extendedArtifacts/",
