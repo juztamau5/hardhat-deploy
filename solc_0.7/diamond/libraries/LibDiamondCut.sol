@@ -12,15 +12,15 @@ import "./LibDiamondStorage.sol";
 import "../interfaces/IDiamondCut.sol";
 
 library LibDiamondCut {
-    event DiamondCut(IDiamondCut.Facet[] _diamondCut, address _init, bytes _calldata);
+    event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 
     // Non-standard internal function version of diamondCut
     // This code is almost the same as externalCut, except it is using
-    // 'Facet[] memory _diamondCut' instead of 'Facet[] calldata _diamondCut'
+    // 'FacetCut[] memory _diamondCut' instead of 'FacetCut[] calldata _diamondCut'
     // and it DOES issue the DiamondCut event
     // The code is duplicated to prevent copying calldata to memory which
     // causes a Solidity error for a two dimensional array.
-    function diamondCut(IDiamondCut.Facet[] memory _diamondCut) internal {
+    function diamondCut(IDiamondCut.FacetCut[] memory _diamondCut) internal {
         LibDiamondStorage.DiamondStorage storage ds = LibDiamondStorage.diamondStorage();
         for (uint256 facetIndex; facetIndex < _diamondCut.length; facetIndex++) {
             address newFacetAddress = _diamondCut[facetIndex].facetAddress;

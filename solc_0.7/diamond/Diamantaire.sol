@@ -10,15 +10,18 @@ contract Diamantaire {
 
     function createDiamond(
         address owner,
-        IDiamondCut.Facet[] calldata _diamondCut,
+        IDiamondCut.FacetCut[] calldata _diamondCut,
         bytes calldata data,
         bytes32 salt
     ) external payable returns (Diamond diamond) {
+        Diamond.DiamondArgs memory args;
+        args.owner = address(this);
+
         if (salt != 0x0000000000000000000000000000000000000000000000000000000000000000) {
             salt = keccak256(abi.encodePacked(salt, owner));
-            diamond = new Diamond{value: msg.value, salt: salt}(address(this));
+            diamond = new Diamond{value: msg.value, salt: salt}(_diamondCut, args);
         } else {
-            diamond = new Diamond{value: msg.value}(address(this));
+            diamond = new Diamond{value: msg.value}(_diamondCut, args);
         }
         emit DiamondCreated(diamond);
 
